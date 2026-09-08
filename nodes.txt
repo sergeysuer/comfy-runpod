@@ -1,0 +1,53 @@
+# =============================================================
+#  CUSTOM NODES
+#  This is the ONLY file you normally edit.
+#  - one git URL per line
+#  - a line starting with # is OFF (not installed)
+#  - remove the # to turn a node ON
+#  Save/commit this file and GitHub rebuilds the image for you.
+# =============================================================
+
+# ---------- CORE: image generation, 2D art, Photoshop workflow ----------
+https://github.com/Comfy-Org/ComfyUI-Manager
+https://github.com/city96/ComfyUI-GGUF
+https://github.com/ltdrdata/ComfyUI-Impact-Pack
+https://github.com/ltdrdata/ComfyUI-Impact-Subpack
+https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch
+https://github.com/kijai/ComfyUI-KJNodes
+https://github.com/rgthree/rgthree-comfy
+https://github.com/yolain/ComfyUI-Easy-Use
+https://github.com/Fannovel16/comfyui_controlnet_aux
+https://github.com/shiimizu/ComfyUI-TiledDiffusion
+https://github.com/1038lab/ComfyUI-RMBG
+https://github.com/MohammadAboulEla/ComfyUI-iTools
+https://github.com/bgreene2/ComfyUI-OpenAI-API
+https://github.com/gseth/ControlAltAI-Nodes
+https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+https://github.com/kijai/ComfyUI-SCAIL-Pose
+https://github.com/yolain/ComfyUI-Easy-Sam3
+https://gitlab.com/pixaroma/ComfyUI-Pixaroma
+https://github.com/lbouaraba/comfyui-krea2edit
+https://github.com/capitan01R/ComfyUI-Krea2T-Enhancer
+
+# ---------- OPTIONAL: heavy. Turn on one at a time. ----------
+# LayerStyle - great for 2D art, but a very large dependency tree
+# https://github.com/chflame163/ComfyUI_LayerStyle
+
+# Nunchaku - needs a wheel matching the image's exact torch/python/CUDA.
+# Most likely of all these to break the build. Test alone.
+# https://github.com/nunchaku-ai/ComfyUI-nunchaku
+
+# Qwen vision-language model nodes
+# https://github.com/1038lab/ComfyUI-QwenVL
+
+# ---------- OPTIONAL: video + audio (not needed for still images) ----------
+# https://github.com/kijai/ComfyUI-WanVideoWrapper
+# https://github.com/kijai/ComfyUI-WanAnimatePreprocess
+# https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler
+# https://github.com/kijai/ComfyUI-MelBandRoFormer
+# https://github.com/Saganaki22/ComfyUI-FishAudioS2
+# https://github.com/flybirdxx/ComfyUI-Qwen-TTS
+
+# ---------- NOT INCLUDED ----------
+# ComfyUI-Align  - your local copy has no git repo, so there is no URL
+#                  to clone. Find its source and paste the URL here.
