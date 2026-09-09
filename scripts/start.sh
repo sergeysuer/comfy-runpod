@@ -26,9 +26,14 @@ if [ -n "$VOL" ]; then
 
     # Point ComfyUI at the volume for models. Folder names match
     # your existing local EZI layout so workflows transfer 1:1.
-    cat > /comfyui/extra_model_paths.yaml <<EOF
-runpod_volume:
-    base_path: ${VOL}/
+    #
+    # Models may sit under $VOL/models (this image's layout) OR under
+    # $VOL/ComfyUI/models (the older runpod/comfyui template kept them there).
+    # Register every "models/" root we can find so nothing is missed.
+    emit_model_paths() {   # $1 = yaml key   $2 = base path (with trailing /)
+        cat >> /comfyui/extra_model_paths.yaml <<EOF
+$1:
+    base_path: $2
     checkpoints: models/checkpoints
     clip: models/clip
     clip_vision: models/clip_vision
@@ -52,6 +57,27 @@ runpod_volume:
     vae: models/vae
     vae_approx: models/vae_approx
 EOF
+    }
+
+    : > /comfyui/extra_model_paths.yaml
+    emit_model_paths runpod_volume "${VOL}/"
+
+    if [ -d "${VOL}/ComfyUI/models" ]; then
+        emit_model_paths runpod_volume_legacy "${VOL}/ComfyUI/"
+        echo "[start] legacy model root registered: ${VOL}/ComfyUI/models"
+    fi
+    # catch any other nested layout, e.g. $VOL/<something>/models/checkpoints
+    n=0
+    while IFS= read -r ckpt; do
+        base="$(dirname "$(dirname "$ckpt")")"
+        case "$base/" in
+            "${VOL}/"|"${VOL}/ComfyUI/") continue ;;
+        esac
+        n=$((n + 1))
+        emit_model_paths "runpod_volume_extra_${n}" "${base}/"
+        echo "[start] extra model root registered: ${base}/models"
+    done < <(find "$VOL" -mindepth 3 -maxdepth 4 -type d -path '*/models/checkpoints' 2>/dev/null)
+
     echo "[start] wrote /comfyui/extra_model_paths.yaml"
 else
     echo "[start] WARNING: no network volume mounted."
