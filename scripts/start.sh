@@ -96,8 +96,20 @@ if [ "$MODE" = "pod" ]; then
     PORT="${COMFY_PORT:-8188}"
     echo "[start] launching ComfyUI web UI on port $PORT"
     cd /comfyui
+
+    # Send generated images to the network volume, not the container's
+    # ephemeral disk, so they survive pod termination and show up over
+    # the S3 API (same reasoning as the models path fix above).
+    OUTPUT_ARGS=""
+    if [ -n "$VOL" ]; then
+        OUTPUT_ARGS="--output-directory ${VOL}/output"
+        echo "[start] output directory: ${VOL}/output"
+    else
+        echo "[start] WARNING: no network volume mounted, outputs will not persist."
+    fi
+
     # shellcheck disable=SC2086
-    exec python -u main.py --listen 0.0.0.0 --port "$PORT" ${EXTRA_ARGS:-}
+    exec python -u main.py --listen 0.0.0.0 --port "$PORT" $OUTPUT_ARGS ${EXTRA_ARGS:-}
 else
     # ---- serverless handler ----
     echo "[start] launching RunPod serverless handler"
